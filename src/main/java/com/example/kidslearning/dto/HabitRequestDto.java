@@ -5,6 +5,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class SubjectRequestDto {
+public class HabitRequestDto {
     private String name;
 }

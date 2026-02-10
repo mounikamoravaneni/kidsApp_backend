@@ -13,13 +13,13 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "subjects")
+@Table(name = "habits")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Subject {
+public class Habits {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,10 +28,10 @@ public class Subject {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "habits", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Chapter> chapters = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "subjects")
+    @ManyToMany(mappedBy = "habits")
     private Set<Kid> kids = new HashSet<>();
 }
 

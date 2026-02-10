@@ -1,13 +1,13 @@
 package com.example.kidslearning.service.impl;
 
 import com.example.kidslearning.dto.KidDto;
-import com.example.kidslearning.dto.SubjectDto;
+import com.example.kidslearning.dto.HabitsDto;
 import com.example.kidslearning.entity.Kid;
-import com.example.kidslearning.entity.Subject;
+import com.example.kidslearning.entity.Habits;
 import com.example.kidslearning.entity.User;
 import com.example.kidslearning.exception.ResourceNotFoundException;
 import com.example.kidslearning.repository.KidRepository;
-import com.example.kidslearning.repository.SubjectRepository;
+import com.example.kidslearning.repository.HabitsRepository;
 import com.example.kidslearning.repository.UserRepository;
 import com.example.kidslearning.service.KidService;
 import jakarta.transaction.Transactional;
@@ -24,7 +24,7 @@ public class KidServiceImpl implements KidService {
 
     private final KidRepository kidRepository;
     private final UserRepository userRepository;
-    private final SubjectRepository subjectRepository;
+    private final HabitsRepository subjectRepository;
 
     @Override
     public KidDto createKid(KidDto kidDto) {
@@ -70,7 +70,7 @@ public class KidServiceImpl implements KidService {
         Kid kid = kidRepository.findById(kidId)
                 .orElseThrow(() -> new ResourceNotFoundException("Kid not found"));
 
-        Subject subject = subjectRepository.findById(subjectId)
+        Habits subject = subjectRepository.findById(subjectId)
                 .orElseThrow(() -> new ResourceNotFoundException("Subject not found"));
 
         // Remove relationship
@@ -91,8 +91,8 @@ public class KidServiceImpl implements KidService {
         }
         // ✅ Map subjects
         if (kid.getSubjects() != null && !kid.getSubjects().isEmpty()) {
-            List<SubjectDto> subjectList = kid.getSubjects().stream()
-                    .map(s -> new SubjectDto(s.getId(), s.getName()))
+            List<HabitsDto> subjectList = kid.getSubjects().stream()
+                    .map(s -> new HabitsDto(s.getId(), s.getName()))
                     .collect(Collectors.toList());
             dto.setSubjects(subjectList);
         } else {

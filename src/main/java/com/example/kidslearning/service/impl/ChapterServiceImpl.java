@@ -2,10 +2,10 @@ package com.example.kidslearning.service.impl;
 
 import com.example.kidslearning.dto.ChapterDto;
 import com.example.kidslearning.entity.Chapter;
-import com.example.kidslearning.entity.Subject;
+import com.example.kidslearning.entity.Habits;
 import com.example.kidslearning.exception.ResourceNotFoundException;
 import com.example.kidslearning.repository.ChapterRepository;
-import com.example.kidslearning.repository.SubjectRepository;
+import com.example.kidslearning.repository.HabitsRepository;
 import com.example.kidslearning.service.ChapterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,11 +18,11 @@ import java.util.stream.Collectors;
 public class ChapterServiceImpl implements ChapterService {
 
     private final ChapterRepository chapterRepository;
-    private final SubjectRepository subjectRepository;
+    private final HabitsRepository subjectRepository;
 
     @Override
     public ChapterDto createChapter(ChapterDto chapterDto) {
-        Subject subject = subjectRepository.findById(chapterDto.getSubjectId())
+        Habits subject = subjectRepository.findById(chapterDto.getSubjectId())
                 .orElseThrow(() -> new ResourceNotFoundException("Subject not found with id " + chapterDto.getSubjectId()));
 
         Chapter chapter = new Chapter();
@@ -35,7 +35,7 @@ public class ChapterServiceImpl implements ChapterService {
 
     @Override
     public List<ChapterDto> getChaptersBySubject(Long subjectId) {
-        Subject subject = subjectRepository.findById(subjectId)
+        Habits subject = subjectRepository.findById(subjectId)
                 .orElseThrow(() -> new ResourceNotFoundException("Subject not found with id " + subjectId));
 
         return chapterRepository.findBySubject(subject).stream()

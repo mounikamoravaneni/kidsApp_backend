@@ -2,11 +2,10 @@ package com.example.kidslearning.controller;
 
 import com.example.kidslearning.dto.KidDto;
 import com.example.kidslearning.dto.KidSubjectResponseDto;
-import com.example.kidslearning.dto.SubjectDto;
-import com.example.kidslearning.dto.SubjectRequestDto;
-import com.example.kidslearning.entity.Kid;
+import com.example.kidslearning.dto.HabitsDto;
+import com.example.kidslearning.dto.HabitRequestDto;
 import com.example.kidslearning.service.KidService;
-import com.example.kidslearning.service.SubjectService;
+import com.example.kidslearning.service.HabitsService;
 import com.example.kidslearning.util.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/kids")
@@ -27,7 +25,7 @@ import java.util.stream.Collectors;
 public class KidController {
 
     private final KidService kidService;
-    private final SubjectService subjectService;
+    private final HabitsService subjectService;
 
     @PostMapping
     public ResponseEntity<ApiResponse<KidDto>> createKid(@RequestBody KidDto kidDto) {
@@ -38,7 +36,7 @@ public class KidController {
     @PostMapping("/{kidId}/subjects")
     public ResponseEntity<?> addSubjectToKid(
             @PathVariable Long kidId,
-            @RequestBody SubjectRequestDto dto) {
+            @RequestBody HabitRequestDto dto) {
 
         // 1️⃣ Add subject to kid using SubjectService
         subjectService.addSubjectToKid(kidId, dto);
@@ -47,7 +45,7 @@ public class KidController {
         KidDto kidDto = kidService.getKidById(kidId);
 
         // 3️⃣ Map subjects to SubjectDto (if not already done in KidDto)
-        List<SubjectDto> subjectList = kidDto.getSubjects(); // assuming KidDto has List<SubjectDto>
+        List<HabitsDto> subjectList = kidDto.getSubjects(); // assuming KidDto has List<SubjectDto>
 
         // 4️⃣ Create response DTO
         KidSubjectResponseDto data = new KidSubjectResponseDto(
@@ -65,7 +63,7 @@ public class KidController {
         KidDto kidDto = kidService.getKidById(kidId);
 
         // 3️⃣ Map subjects to SubjectDto (if not already done in KidDto)
-        List<SubjectDto> subjectList = kidDto.getSubjects(); // assuming KidDto has List<SubjectDto>
+        List<HabitsDto> subjectList = kidDto.getSubjects(); // assuming KidDto has List<SubjectDto>
 
         KidSubjectResponseDto data = new KidSubjectResponseDto(
                 kidDto.getId(),

@@ -48,7 +48,7 @@ public class Kid {
             joinColumns = @JoinColumn(name = "kid_id"),
             inverseJoinColumns = @JoinColumn(name = "subject_id")
     )
-    private Set<Subject> subjects = new HashSet<>();
+    private Set<Habits> subjects = new HashSet<>();
 }
 
 
