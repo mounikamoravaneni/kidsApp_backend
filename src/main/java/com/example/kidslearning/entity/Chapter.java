@@ -27,8 +27,8 @@ public class Chapter {
     private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "subject_id")
-    private Habits subject;
+    @JoinColumn(name = "habit_id")
+    private Habits habits;
 }
 
 

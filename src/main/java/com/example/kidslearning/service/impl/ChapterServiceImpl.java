@@ -27,7 +27,7 @@ public class ChapterServiceImpl implements ChapterService {
 
         Chapter chapter = new Chapter();
         chapter.setTitle(chapterDto.getTitle());
-        chapter.setSubject(subject);
+        chapter.setHabits(subject);
 
         Chapter saved = chapterRepository.save(chapter);
         return mapToDto(saved);
@@ -62,8 +62,8 @@ public class ChapterServiceImpl implements ChapterService {
         ChapterDto dto = new ChapterDto();
         dto.setId(chapter.getId());
         dto.setTitle(chapter.getTitle());
-        if (chapter.getSubject() != null) {
-            dto.setSubjectId(chapter.getSubject().getId());
+        if (chapter.getHabits() != null) {
+            dto.setSubjectId(chapter.getHabits().getId());
         }
         return dto;
     }

@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor // ✅ allows new SubjectDto(id, name)
 @NoArgsConstructor  // ✅ default constructor
-public class HabitsDto {
+public class HabitDto {
     private Long id;
     private String name;
 }

@@ -1,13 +1,13 @@
 package com.example.kidslearning.service.impl;
 
-import com.example.kidslearning.dto.HabitsDto;
+import com.example.kidslearning.dto.HabitDto;
 import com.example.kidslearning.dto.HabitRequestDto;
 import com.example.kidslearning.entity.Kid;
 import com.example.kidslearning.entity.Habits;
 import com.example.kidslearning.exception.ResourceNotFoundException;
 import com.example.kidslearning.repository.KidRepository;
 import com.example.kidslearning.repository.HabitsRepository;
-import com.example.kidslearning.service.HabitsService;
+import com.example.kidslearning.service.SubjectService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,13 +17,13 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class SubjectServiceImpl implements HabitsService {
+public class SubjectServiceImpl implements SubjectService {
 
     private final HabitsRepository subjectRepository;
     private final KidRepository kidRepository;
 
     @Override
-    public HabitsDto createSubject(HabitsDto subjectDto) {
+    public HabitDto createSubject(HabitDto subjectDto) {
         Habits subject = new Habits();
         subject.setName(subjectDto.getName());
         Habits saved = subjectRepository.save(subject);
@@ -31,14 +31,14 @@ public class SubjectServiceImpl implements HabitsService {
     }
 
     @Override
-    public List<HabitsDto> getAllSubjects() {
+    public List<HabitDto> getAllSubjects() {
         return subjectRepository.findAll().stream()
                 .map(this::mapToDto)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public HabitsDto getSubjectById(Long id) {
+    public HabitDto getSubjectById(Long id) {
         Habits subject = subjectRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Subject not found with id " + id));
         return mapToDto(subject);
@@ -54,8 +54,8 @@ public class SubjectServiceImpl implements HabitsService {
 
 
 
-    private HabitsDto mapToDto(Habits subject) {
-        HabitsDto dto = new HabitsDto();
+    private HabitDto mapToDto(Habits subject) {
+        HabitDto dto = new HabitDto();
         dto.setId(subject.getId());
         dto.setName(subject.getName());
         return dto;
@@ -75,7 +75,7 @@ public class SubjectServiceImpl implements HabitsService {
                 });
 
         // ✅ map both sides (VERY IMPORTANT)
-        kid.getSubjects().add(subject);
+        kid.getHabits().add(subject);
         subject.getKids().add(kid);
 
         kidRepository.save(kid);

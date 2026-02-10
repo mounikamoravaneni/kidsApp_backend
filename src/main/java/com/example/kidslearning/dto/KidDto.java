@@ -13,7 +13,7 @@ public class KidDto {
     private String name;
     private LocalDate dateOfBirth;
     private Long parentId;
-    private List<HabitsDto> subjects; // ← add this
+    private List<HabitDto> subjects; // ← add this
 
     public static KidDto fromEntity(Kid kid) {
         KidDto dto = new KidDto();
@@ -23,9 +23,9 @@ public class KidDto {
         dto.setDateOfBirth(kid.getDateOfBirth());
         // Map subjects
         // Map subjects if they exist
-        if (kid.getSubjects() != null) {
-            List<HabitsDto> subjectList = kid.getSubjects().stream()
-                    .map(s -> new HabitsDto(s.getId(), s.getName()))
+        if (kid.getHabits() != null) {
+            List<HabitDto> subjectList = kid.getHabits().stream()
+                    .map(s -> new HabitDto(s.getId(), s.getName()))
                     .toList();
             dto.setSubjects(subjectList);
         } else {

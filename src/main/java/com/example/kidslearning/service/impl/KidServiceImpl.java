@@ -1,7 +1,7 @@
 package com.example.kidslearning.service.impl;
 
 import com.example.kidslearning.dto.KidDto;
-import com.example.kidslearning.dto.HabitsDto;
+import com.example.kidslearning.dto.HabitDto;
 import com.example.kidslearning.entity.Kid;
 import com.example.kidslearning.entity.Habits;
 import com.example.kidslearning.entity.User;
@@ -74,7 +74,7 @@ public class KidServiceImpl implements KidService {
                 .orElseThrow(() -> new ResourceNotFoundException("Subject not found"));
 
         // Remove relationship
-        kid.getSubjects().remove(subject);
+        kid.getHabits().remove(subject);
         subject.getKids().remove(kid);
 
         // Save the kid (subject side will be updated automatically due to mappedBy)
@@ -90,9 +90,9 @@ public class KidServiceImpl implements KidService {
             dto.setParentId(kid.getParent().getId());
         }
         // ✅ Map subjects
-        if (kid.getSubjects() != null && !kid.getSubjects().isEmpty()) {
-            List<HabitsDto> subjectList = kid.getSubjects().stream()
-                    .map(s -> new HabitsDto(s.getId(), s.getName()))
+        if (kid.getHabits() != null && !kid.getHabits().isEmpty()) {
+            List<HabitDto> subjectList = kid.getHabits().stream()
+                    .map(s -> new HabitDto(s.getId(), s.getName()))
                     .collect(Collectors.toList());
             dto.setSubjects(subjectList);
         } else {

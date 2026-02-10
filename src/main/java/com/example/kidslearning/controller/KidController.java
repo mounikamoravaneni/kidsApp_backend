@@ -2,10 +2,10 @@ package com.example.kidslearning.controller;
 
 import com.example.kidslearning.dto.KidDto;
 import com.example.kidslearning.dto.KidSubjectResponseDto;
-import com.example.kidslearning.dto.HabitsDto;
+import com.example.kidslearning.dto.HabitDto;
 import com.example.kidslearning.dto.HabitRequestDto;
 import com.example.kidslearning.service.KidService;
-import com.example.kidslearning.service.HabitsService;
+import com.example.kidslearning.service.SubjectService;
 import com.example.kidslearning.util.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +25,7 @@ import java.util.List;
 public class KidController {
 
     private final KidService kidService;
-    private final HabitsService subjectService;
+    private final SubjectService subjectService;
 
     @PostMapping
     public ResponseEntity<ApiResponse<KidDto>> createKid(@RequestBody KidDto kidDto) {
@@ -45,7 +45,7 @@ public class KidController {
         KidDto kidDto = kidService.getKidById(kidId);
 
         // 3️⃣ Map subjects to SubjectDto (if not already done in KidDto)
-        List<HabitsDto> subjectList = kidDto.getSubjects(); // assuming KidDto has List<SubjectDto>
+        List<HabitDto> subjectList = kidDto.getSubjects(); // assuming KidDto has List<SubjectDto>
 
         // 4️⃣ Create response DTO
         KidSubjectResponseDto data = new KidSubjectResponseDto(
@@ -63,7 +63,7 @@ public class KidController {
         KidDto kidDto = kidService.getKidById(kidId);
 
         // 3️⃣ Map subjects to SubjectDto (if not already done in KidDto)
-        List<HabitsDto> subjectList = kidDto.getSubjects(); // assuming KidDto has List<SubjectDto>
+        List<HabitDto> subjectList = kidDto.getSubjects(); // assuming KidDto has List<SubjectDto>
 
         KidSubjectResponseDto data = new KidSubjectResponseDto(
                 kidDto.getId(),

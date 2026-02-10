@@ -1,17 +1,17 @@
 package com.example.kidslearning.service;
 
-import com.example.kidslearning.dto.HabitsDto;
+import com.example.kidslearning.dto.HabitDto;
 import com.example.kidslearning.dto.HabitRequestDto;
 
 import java.util.List;
 
-public interface HabitsService {
+public interface SubjectService {
 
-    HabitsDto createSubject(HabitsDto subjectDto);
+    HabitDto createSubject(HabitDto subjectDto);
 
-    List<HabitsDto> getAllSubjects();
+    List<HabitDto> getAllSubjects();
 
-    HabitsDto getSubjectById(Long id);
+    HabitDto getSubjectById(Long id);
 
     void deleteSubject(Long id);
 

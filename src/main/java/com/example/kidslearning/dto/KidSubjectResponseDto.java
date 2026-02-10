@@ -12,5 +12,5 @@ import java.util.List;
 public class KidSubjectResponseDto {
     private Long kidId;
     private String kidName;
-    private List<HabitsDto> subjects;
+    private List<HabitDto> subjects;
 }

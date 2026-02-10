@@ -1,7 +1,7 @@
 package com.example.kidslearning.controller;
 
-import com.example.kidslearning.dto.HabitsDto;
-import com.example.kidslearning.service.HabitsService;
+import com.example.kidslearning.dto.HabitDto;
+import com.example.kidslearning.service.SubjectService;
 import com.example.kidslearning.util.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,25 +20,25 @@ import java.util.List;
 @RequiredArgsConstructor
 public class HabitsController {
 
-    private final HabitsService subjectService;
+    private final SubjectService subjectService;
 
 
 
     @PostMapping
-    public ResponseEntity<ApiResponse<HabitsDto>> createSubject(@RequestBody HabitsDto subjectDto) {
-        HabitsDto created = subjectService.createSubject(subjectDto);
+    public ResponseEntity<ApiResponse<HabitDto>> createSubject(@RequestBody HabitDto subjectDto) {
+        HabitDto created = subjectService.createSubject(subjectDto);
         return ResponseEntity.ok(ApiResponse.ok("Subject created successfully", created));
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponse<List<HabitsDto>>> getAllSubjects() {
-        List<HabitsDto> subjects = subjectService.getAllSubjects();
+    public ResponseEntity<ApiResponse<List<HabitDto>>> getAllSubjects() {
+        List<HabitDto> subjects = subjectService.getAllSubjects();
         return ResponseEntity.ok(ApiResponse.ok("Subjects fetched successfully", subjects));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<HabitsDto>> getSubjectById(@PathVariable Long id) {
-        HabitsDto subject = subjectService.getSubjectById(id);
+    public ResponseEntity<ApiResponse<HabitDto>> getSubjectById(@PathVariable Long id) {
+        HabitDto subject = subjectService.getSubjectById(id);
         return ResponseEntity.ok(ApiResponse.ok("Subject fetched successfully", subject));
     }
 
