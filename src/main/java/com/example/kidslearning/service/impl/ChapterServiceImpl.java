@@ -18,11 +18,11 @@ import java.util.stream.Collectors;
 public class ChapterServiceImpl implements ChapterService {
 
     private final ChapterRepository chapterRepository;
-    private final HabitsRepository subjectRepository;
+    private final HabitsRepository habitRepository;
 
     @Override
     public ChapterDto createChapter(ChapterDto chapterDto) {
-        Habits subject = subjectRepository.findById(chapterDto.getSubjectId())
+        Habits subject = habitRepository.findById(chapterDto.getSubjectId())
                 .orElseThrow(() -> new ResourceNotFoundException("Subject not found with id " + chapterDto.getSubjectId()));
 
         Chapter chapter = new Chapter();
@@ -34,11 +34,11 @@ public class ChapterServiceImpl implements ChapterService {
     }
 
     @Override
-    public List<ChapterDto> getChaptersBySubject(Long subjectId) {
-        Habits subject = subjectRepository.findById(subjectId)
-                .orElseThrow(() -> new ResourceNotFoundException("Subject not found with id " + subjectId));
+    public List<ChapterDto> getChaptersBySubject(Long habitId) {
+        Habits habits = habitRepository.findById(habitId)
+                .orElseThrow(() -> new ResourceNotFoundException("Habit not found with id " + habitId));
 
-        return chapterRepository.findBySubject(subject).stream()
+        return chapterRepository.findByHabits(habits).stream()
                 .map(this::mapToDto)
                 .collect(Collectors.toList());
     }

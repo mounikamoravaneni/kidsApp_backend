@@ -29,8 +29,8 @@ public class ChapterController {
     }
 
     @GetMapping("/subject/{subjectId}")
-    public ResponseEntity<ApiResponse<List<ChapterDto>>> getChaptersBySubject(@PathVariable Long subjectId) {
-        List<ChapterDto> chapters = chapterService.getChaptersBySubject(subjectId);
+    public ResponseEntity<ApiResponse<List<ChapterDto>>> getChaptersBySubject(@PathVariable Long habitId) {
+        List<ChapterDto> chapters = chapterService.getChaptersBySubject(habitId);
         return ResponseEntity.ok(ApiResponse.ok("Chapters fetched successfully", chapters));
     }
 

@@ -44,7 +44,7 @@ public class Kid {
     //another table
     @ManyToMany
     @JoinTable(
-            name = "kid_subject",
+            name = "kid_habit",
             joinColumns = @JoinColumn(name = "kid_id"),
             inverseJoinColumns = @JoinColumn(name = "habit_id")
     )
