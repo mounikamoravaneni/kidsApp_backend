@@ -26,6 +26,9 @@ public class HabitsController {
 
     @PostMapping
     public ResponseEntity<ApiResponse<HabitDto>> createSubject(@RequestBody HabitDto subjectDto) {
+
+        System.out.println("=== POST API HIT ===");
+        System.out.println("Name received: " + subjectDto.getName());
         HabitDto created = subjectService.createSubject(subjectDto);
         return ResponseEntity.ok(ApiResponse.ok("Habit created successfully", created));
     }

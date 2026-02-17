@@ -37,13 +37,6 @@ public class Kid {
 
 
 
-
-
-    // ✅ Add this for habits
-    @OneToMany(mappedBy = "kid", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Habits> habits = new ArrayList<>();
-
-
 }
 
 

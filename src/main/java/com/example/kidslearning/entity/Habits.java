@@ -28,13 +28,6 @@ public class Habits {
     @Column(nullable = false, unique = true)
     private String name;
 
-
-
-    @ManyToOne
-    @JoinColumn(name = "kid_id", nullable = false)
-    private Kid kid;
-
-
 }
 
 
