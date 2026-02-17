@@ -37,18 +37,13 @@ public class Kid {
 
 
 
+
+
+    // ✅ Add this for habits
     @OneToMany(mappedBy = "kid", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Progress> progressList = new ArrayList<>();
+    private List<Habits> habits = new ArrayList<>();
 
 
-    //another table
-    @ManyToMany
-    @JoinTable(
-            name = "kid_habit",
-            joinColumns = @JoinColumn(name = "kid_id"),
-            inverseJoinColumns = @JoinColumn(name = "habit_id")
-    )
-    private Set<Habits> habits = new HashSet<>();
 }
 
 

@@ -74,9 +74,7 @@ public class SubjectServiceImpl implements SubjectService {
                     return subjectRepository.save(newSubject);
                 });
 
-        // ✅ map both sides (VERY IMPORTANT)
-        kid.getHabits().add(subject);
-        subject.getKids().add(kid);
+
 
         kidRepository.save(kid);
     }

@@ -73,9 +73,7 @@ public class KidServiceImpl implements KidService {
         Habits subject = subjectRepository.findById(subjectId)
                 .orElseThrow(() -> new ResourceNotFoundException("Subject not found"));
 
-        // Remove relationship
-        kid.getHabits().remove(subject);
-        subject.getKids().remove(kid);
+
 
         // Save the kid (subject side will be updated automatically due to mappedBy)
         kidRepository.save(kid);
@@ -89,15 +87,7 @@ public class KidServiceImpl implements KidService {
         if (kid.getParent() != null) {
             dto.setParentId(kid.getParent().getId());
         }
-        // ✅ Map subjects
-        if (kid.getHabits() != null && !kid.getHabits().isEmpty()) {
-            List<HabitDto> subjectList = kid.getHabits().stream()
-                    .map(s -> new HabitDto(s.getId(), s.getName()))
-                    .collect(Collectors.toList());
-            dto.setSubjects(subjectList);
-        } else {
-            dto.setSubjects(new ArrayList<>()); // prevent null
-        }
+
 
         return dto;
     }

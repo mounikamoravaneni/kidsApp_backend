@@ -21,16 +21,7 @@ public class KidDto {
         dto.setName(kid.getName());
         dto.setParentId(kid.getParent().getId());
         dto.setDateOfBirth(kid.getDateOfBirth());
-        // Map subjects
-        // Map subjects if they exist
-        if (kid.getHabits() != null) {
-            List<HabitDto> subjectList = kid.getHabits().stream()
-                    .map(s -> new HabitDto(s.getId(), s.getName()))
-                    .toList();
-            dto.setSubjects(subjectList);
-        } else {
-            dto.setSubjects(new ArrayList<>()); // prevent null
-        }
+
         return dto;
     }
 

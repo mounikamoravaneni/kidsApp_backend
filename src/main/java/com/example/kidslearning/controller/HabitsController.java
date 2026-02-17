@@ -27,25 +27,25 @@ public class HabitsController {
     @PostMapping
     public ResponseEntity<ApiResponse<HabitDto>> createSubject(@RequestBody HabitDto subjectDto) {
         HabitDto created = subjectService.createSubject(subjectDto);
-        return ResponseEntity.ok(ApiResponse.ok("Subject created successfully", created));
+        return ResponseEntity.ok(ApiResponse.ok("Habit created successfully", created));
     }
 
     @GetMapping
     public ResponseEntity<ApiResponse<List<HabitDto>>> getAllSubjects() {
         List<HabitDto> subjects = subjectService.getAllSubjects();
-        return ResponseEntity.ok(ApiResponse.ok("Subjects fetched successfully", subjects));
+        return ResponseEntity.ok(ApiResponse.ok("Habit fetched successfully", subjects));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<HabitDto>> getSubjectById(@PathVariable Long id) {
         HabitDto subject = subjectService.getSubjectById(id);
-        return ResponseEntity.ok(ApiResponse.ok("Subject fetched successfully", subject));
+        return ResponseEntity.ok(ApiResponse.ok("Habit fetched successfully", subject));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<Void>> deleteSubject(@PathVariable Long id) {
         subjectService.deleteSubject(id);
-        return ResponseEntity.ok(ApiResponse.ok("Subject deleted successfully", null));
+        return ResponseEntity.ok(ApiResponse.ok("Habit deleted successfully", null));
     }
 }
 

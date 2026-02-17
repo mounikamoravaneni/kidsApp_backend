@@ -28,11 +28,13 @@ public class Habits {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @OneToMany(mappedBy = "habits", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Chapter> chapters = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "habits")
-    private Set<Kid> kids = new HashSet<>();
+
+    @ManyToOne
+    @JoinColumn(name = "kid_id", nullable = false)
+    private Kid kid;
+
+
 }
 
 
