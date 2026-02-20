@@ -16,7 +16,9 @@ import java.time.LocalDate;
 @Builder
 @Table(name = "habit_tracking",
         uniqueConstraints = {
-                @UniqueConstraint(columnNames = {"habit_id", "kid_id", "tracking_date"})
+                @UniqueConstraint(
+                        name = "uk_habit_kid_date",
+                        columnNames = {"habit_id", "kid_id", "tracking_date"})
         })
 public class HabitTracking {
 
@@ -24,11 +26,14 @@ public class HabitTracking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "habit_id", nullable = false)
-    private Long habitId;
+    // ✅ Relationship to Habit
+    @ManyToOne(fetch = FetchType.LAZY)  // LAZY is recommended
+    @JoinColumn(name = "habit_id", nullable = false)
+    private Habits habit;
 
-    @Column(name = "kid_id", nullable = false)
-    private Long kidId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "kid_id", nullable = false)
+    private Kid kid;
 
     @Column(name = "tracking_date", nullable = false)
     private LocalDate trackingDate;
@@ -37,5 +42,5 @@ public class HabitTracking {
 
     private LocalDateTime createdAt = LocalDateTime.now();
 
-   
+
 }

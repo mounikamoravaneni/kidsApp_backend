@@ -1,35 +1,48 @@
 package com.example.kidslearning.controller;
 
 
+import com.example.kidslearning.dto.HabitTrackingRequest;
+import com.example.kidslearning.dto.MonthlyHabitResponse;
 import com.example.kidslearning.entity.HabitTracking;
 import com.example.kidslearning.service.HabitTrackingService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
+
+@RequiredArgsConstructor
 @RequestMapping("/habit-tracking")
 public class HabitTrackingController {
 
     private final HabitTrackingService service;
 
-    public HabitTrackingController(HabitTrackingService service) {
-        this.service = service;
+    @PostMapping("/save-multiple")
+    public ResponseEntity<?> saveHabits(@RequestBody HabitTrackingRequest request) {
+
+        String message = service.saveHabits(
+                request.getKidId(),
+                request.getHabitIds(),
+                request.getTrackingDate()
+        );
+
+        return ResponseEntity.ok(Map.of(
+                "success", true,
+                "message", message
+        ));
     }
 
-    @PostMapping("/save")
-    public HabitTracking saveHabit(
-            @RequestParam Long habitId,
-            @RequestParam Long kidId) {
 
-        return service.saveHabit(habitId, kidId);
-    }
 
-    @GetMapping("/today/{kidId}")
-    public List<HabitTracking> getTodayHabits(
-            @PathVariable Long kidId) {
-
-        return service.getTodayHabits(kidId);
+    @GetMapping("/monthly")
+    public List<MonthlyHabitResponse> getMonthlyHabits(
+            @RequestParam Long kidId,
+            @RequestParam int year,
+            @RequestParam int month) {
+        return service.getMonthlyHabits(kidId, year, month);
     }
 }
 
