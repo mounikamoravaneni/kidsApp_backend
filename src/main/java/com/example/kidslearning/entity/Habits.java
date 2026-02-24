@@ -28,6 +28,9 @@ public class Habits {
     @Column(nullable = false, unique = true)
     private String name;
 
+    // ✅ Add relationship to HabitTracking
+    @OneToMany(mappedBy = "habit", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<HabitTracking> trackings = new ArrayList<>();
 }
 
 

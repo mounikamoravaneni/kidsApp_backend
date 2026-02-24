@@ -1,9 +1,13 @@
 package com.example.kidslearning.controller;
 
+import com.example.kidslearning.dto.BulkDeleteRequest;
 import com.example.kidslearning.dto.HabitDto;
 import com.example.kidslearning.service.SubjectService;
 import com.example.kidslearning.util.ApiResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +24,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class HabitsController {
 
-    private final SubjectService subjectService;
+    private final SubjectService habitService;
 
 
 
@@ -29,26 +33,46 @@ public class HabitsController {
 
         System.out.println("=== POST API HIT ===");
         System.out.println("Name received: " + subjectDto.getName());
-        HabitDto created = subjectService.createSubject(subjectDto);
+        HabitDto created = habitService.createSubject(subjectDto);
         return ResponseEntity.ok(ApiResponse.ok("Habit created successfully", created));
     }
 
     @GetMapping
     public ResponseEntity<ApiResponse<List<HabitDto>>> getAllSubjects() {
-        List<HabitDto> subjects = subjectService.getAllSubjects();
+        List<HabitDto> subjects = habitService.getAllSubjects();
         return ResponseEntity.ok(ApiResponse.ok("Habit fetched successfully", subjects));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<HabitDto>> getSubjectById(@PathVariable Long id) {
-        HabitDto subject = subjectService.getSubjectById(id);
+        HabitDto subject = habitService.getSubjectById(id);
         return ResponseEntity.ok(ApiResponse.ok("Habit fetched successfully", subject));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<Void>> deleteSubject(@PathVariable Long id) {
-        subjectService.deleteSubject(id);
-        return ResponseEntity.ok(ApiResponse.ok("Habit deleted successfully", null));
+
+    @DeleteMapping("/bulk")
+    public ResponseEntity<ApiResponse<Void>> deleteHabits(@RequestBody BulkDeleteRequest request) {
+        try {
+            if (request == null || request.getIds() == null || request.getIds().isEmpty()) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(ApiResponse.error("No habit IDs provided to delete."));
+            }
+
+            habitService.deleteHabit(request.getIds());
+            return ResponseEntity.ok(ApiResponse.ok("Habits deleted successfully", null));
+
+        } catch (EmptyResultDataAccessException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(ApiResponse.error("Some habits were not found: " + e.getMessage()));
+
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body(ApiResponse.error("Cannot delete habits due to existing dependencies."));
+
+        }catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(ApiResponse.error("Failed to delete habits: " + e.getMessage()));
+        }
     }
 }
 

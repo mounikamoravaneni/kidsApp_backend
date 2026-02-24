@@ -13,7 +13,7 @@ public interface SubjectService {
 
     HabitDto getSubjectById(Long id);
 
-    void deleteSubject(Long id);
+    void deleteHabit(List<Long> ids);
 
     // ✅ ADD THIS
     void addSubjectToKid(Long kidId, HabitRequestDto dto);
