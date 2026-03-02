@@ -11,7 +11,7 @@ public interface SubjectService {
 
     List<HabitDto> getAllSubjects();
 
-    HabitDto getSubjectById(Long id);
+    List<HabitDto> getHabitsByParentId(Long id);
 
     void deleteHabit(List<Long> ids);
 

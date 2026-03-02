@@ -32,31 +32,28 @@ public class HabitsController {
     public ResponseEntity<ApiResponse<HabitDto>> createSubject(@RequestBody HabitDto subjectDto) {
 
         System.out.println("=== POST API HIT ===");
-        System.out.println("Name received: " + subjectDto.getName());
+        System.out.println("Name received: " + subjectDto.getParentId());
         HabitDto created = habitService.createSubject(subjectDto);
         return ResponseEntity.ok(ApiResponse.ok("Habit created successfully", created));
     }
 
-    @GetMapping
-    public ResponseEntity<ApiResponse<List<HabitDto>>> getAllSubjects() {
-        List<HabitDto> subjects = habitService.getAllSubjects();
-        return ResponseEntity.ok(ApiResponse.ok("Habit fetched successfully", subjects));
-    }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<HabitDto>> getSubjectById(@PathVariable Long id) {
-        HabitDto subject = habitService.getSubjectById(id);
-        return ResponseEntity.ok(ApiResponse.ok("Habit fetched successfully", subject));
+
+    @GetMapping("parent/{parentId}")
+    public ResponseEntity<ApiResponse<List<HabitDto>>> getSubjectById(@PathVariable Long parentId) {
+        List<HabitDto> habits = habitService.getHabitsByParentId(parentId);
+        return ResponseEntity.ok(ApiResponse.ok("Habit fetched successfully", habits));
     }
 
 
-    @DeleteMapping("/bulk")
+
+    @PostMapping("/bulk")
     public ResponseEntity<ApiResponse<Void>> deleteHabits(@RequestBody BulkDeleteRequest request) {
         try {
             if (request == null || request.getIds() == null || request.getIds().isEmpty()) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body(ApiResponse.error("No habit IDs provided to delete."));
-            }
+            }app-release.aab
 
             habitService.deleteHabit(request.getIds());
             return ResponseEntity.ok(ApiResponse.ok("Habits deleted successfully", null));

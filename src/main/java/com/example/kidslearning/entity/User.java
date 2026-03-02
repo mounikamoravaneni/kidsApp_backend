@@ -35,6 +35,8 @@ public class User {
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Kid> kids = new ArrayList<>();
 
+    @OneToMany(mappedBy = "parent" , cascade = CascadeType.ALL ,orphanRemoval = true)
+    private List<Habits> habits = new ArrayList<>();
 
 }
 
