@@ -53,7 +53,7 @@ public class HabitsController {
             if (request == null || request.getIds() == null || request.getIds().isEmpty()) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body(ApiResponse.error("No habit IDs provided to delete."));
-            }app-release.aab
+            }
 
             habitService.deleteHabit(request.getIds());
             return ResponseEntity.ok(ApiResponse.ok("Habits deleted successfully", null));
